@@ -1,5 +1,7 @@
 ## Output PDF
 *.pdf
+# Keep the output PDF in the out folder.
+!out/index.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
