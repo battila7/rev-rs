@@ -31,4 +31,32 @@
         \end{align*}
         $\rho$ egy speciális szimbólum (tehát $\rho \notin P_{a}, a \in A_{\textit{rev}}$), mely egy visszafelé irányba tett számítási lépésre kényszeríti a rendszert.
     \end{definition*}
+
+    \section*{Példa}
+    Tekintsünk a \textit{Tour of Reaction Systems} cikkből egy olyan \textit{Binary Countert}, ahol $n = 2$, azaz két bittel dolgozunk. Ekkor a \textit{reaction system} a következő alaphalmazból és reakciókból áll:
+
+    \begin{align*}
+        S = \; & \{ \, p_{0}, p_{1},  \inc, \dec \, \}, \\
+        A = \; & \{ \\
+            & \quad (\{ p_{0} \}, \{ \dec, \inc \}, \{ p_{0} \}), \\
+            & \quad (\{ p_{1} \}, \{ \dec, \inc \}, \{ p_{1} \}), \\
+            & \quad (\{ \inc \}, \{ \dec, p_{0} \}, \{ p_{0} \}), \\
+            & \quad (\{ \inc, p_{0} \}, \{ \dec, p_{1} \}, \{ p_{1} \}), \\
+            & \quad (\{ \inc, p_{1} \}, \{ \dec, p_{0} \}, \{ p_{1} \}), \\
+            & \quad (\{ \dec \}, \{ \inc, p_{0}, p_{1} \}, \{ p_{1} \}), \\
+            & \quad (\{ \dec \}, \{ \inc, p_{0} \}, \{ p_{0} \}), \\
+            & \quad (\{ \dec, p_{0}, p_{1} \}, \{ \inc \}, \{ p_{1} \}), \\
+        \; &\}
+    \end{align*}
+
+    Az így kapott \textit{rs} nem teljesíti a fenti definíciót, hiszen a reakciók jobb oldalai között lesz átfedés. Ezt jobban illusztrálja, ha állapotátmenet-diagramon ábrázoljuk a rendszer működését (egyelőre kihagyva a \textit{reset} átmenetet, amikor a bemenet az $\inc$ és $\dec$ szimbólumokból áll):
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=5in]{two-bit-counter-states.jpg}
+    \end{figure}
+
+    Ha például a $p_{0}$ állapotban vagyunk, akkor nem tudhatjuk, hogy az üres állapotból, önmagunkból vagy a $p_{1}$ állapotból érkeztünk, azaz, a megelőző lépés növelés, helyben maradás vagy csökkentés volt-e. Így a visszalépés nem egyértelmű.
+
+    Kettőnél több bit esetén a definíció harmadik szabálya sem teljesül, hiszen ahogy a cikkben szerepel, lehetnek eltűnő szimbólumok (\enquote{\textit{[When an increment is requested] bits that are less significant than the $2^{j}$ position will disappear because there are no enabled reactions to produce them.}}).
 \end{document}
