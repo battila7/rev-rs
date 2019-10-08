@@ -1,57 +1,34 @@
 \documentclass[12pt]{article}
 
-\usepackage{t1enc}
-\usepackage[utf8]{inputenc}
-\usepackage[magyar]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amsthm}
-\usepackage{amssymb}
+\input{./packages.tex}
 
-\usepackage[autostyle]{csquotes}
-\selectlanguage{magyar}
-\DeclareQuoteAlias{dutch}{magyar}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definíció}
-\newtheorem*{definition*}{Definíció}
-
-\newenvironment{outdentlist}
-  {\begin{list}{}{\setlength\itemindent{-\leftmargin}}}
-  {\end{list}}
-
-\let\oldemptyset\emptyset
-\let\emptyset\varnothing
+\input{./definitions.tex}
 
 \title{Reverzibilis Reaction System}
 \date{\today}
 
 \begin{document}
     \maketitle
+
     \begin{definition*}
-    Legyen Az $\mathcal{A} = (S, A)$ \textit{reaction system} egyszerűen reverzibilissé tehető, amennyiben a következő feltételek teljesülnek:
-
-        \begin{outdentlist}
+        Az $\mathcal{A} = (S, A)$ \textit{reaction system} reverzibilissé tehető, amennyiben teljesülnek a következő feltételek:
+        \begin{enumerate}[label={(\arabic*)}]
             \item
-            $\mathcal{A}$ nem tartalmaz olyan reakciókat, melyeknek jobb oldala átfedő. Azaz, bármely $i, j \in A$ reakció esetén $P_{i} \cap P{j} = \emptyset$, ha $i \neq j$.
-
-            \item
-            A kontextusból kapott szimbólumok nem állhatnak elő egy reakció produktumaként sem. Azaz, ha $\pi = (\gamma, \delta)$ egy \textit{interactive process}, ahol $\gamma = C_{0}, C_{1}, \ldots, C_{n}$, $n \geq 1$, akkor bármely $C_{i}$ kontextus és $a \in A$ reakció esetén $C_{i} \cap P_{a} = \emptyset$.
+            $\mathcal{A}$ nem tartalmaz olyan reakciókat, melyeknek jobb oldala átfedő: tetszőleges $i, j \in A$ reakció esetén $P_{i} \cap P{j} = \emptyset$, ha $i \neq j$.
 
             \item
-            Az állapotok minden eleme részt vesz valamilyen reakcióban. Azaz, ha $\pi$ egy \textit{interactive process}, ahol $\textit{sts}(\pi) = W_{0}, W_{1}, \ldots, W_{n}$, $n \geq 1$, akkor $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
-        \end{outdentlist}
+            A kontextusból kapott szimbólumok nem állhatnak elő egy reakció produktumaként sem: ha $\pi = (\gamma, \delta)$ egy \textit{interactive process}, ahol $\gamma = C_{0}, C_{1}, \ldots, C_{n}$, $n \geq 1$, akkor bármely $C_{i}$ kontextus és $a \in A$ reakció esetén $C_{i} \cap P_{a} = \emptyset$.
 
-    Ekkor az $\mathcal{A}$-nak megfelelő reverzibilis \textit{reaction system} $\mathcal{A}_{\textit{rev}} = (S_{\textit{rev}}, A_{\textit{rev}})$, ahol
-        $$
-        S_{\textit{rev}} = S \cup \{\rho\}
-        $$
-    és
-        $$
-        A_{\textit{rev}} = 
-            \{ (R_{a}, I_{a} \cup \{ \rho \}, P_{a} \} 
-            \cup 
-            \{ (P_{a}\}
-        $$
+            \item
+            Az állapotok minden eleme részt vesz valamilyen reakcióban: ha $\pi$ egy \textit{interactive process}, ahol $\textit{sts}(\pi) = W_{0}, W_{1}, \ldots, W_{n}$, $n \geq 1$, akkor $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
+        \end{enumerate}
+        Ekkor az $\mathcal{A}$-nak megfelelő reverzibilis \textit{reaction system} $\mathcal{A}_{\textit{rev}} = (S_{\textit{rev}}, A_{\textit{rev}})$, ahol
+        \begin{align*}
+            S_{\textit{rev}} &= S \cup \{ \, \rho \, \}, \\
+            A_{\textit{rev}} &= \forwardhat A \cup \backwardhat A, \\ 
+            \forwardhat A &= \{ \, (R_{a}, I_{a} \cup \{ \, \rho \, \}, P_{a}) \; : \; a \in A \, \}, \\
+            \backwardhat A &= \{ \, (P_{a} \cup \{ \, \rho \, \}, \emptyset, R_{a}) \; : \; a \in A \, \}.
+        \end{align*}
+        $\rho$ egy speciális szimbólum (tehát $\rho \notin P_{a}, a \in A_{\textit{rev}}$), mely egy visszafelé irányba tett számítási lépésre kényszeríti a rendszert.
     \end{definition*}
 \end{document}
