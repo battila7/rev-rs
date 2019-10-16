@@ -1,8 +1,41 @@
 \documentclass[12pt]{article}
 
-\input{./packages.tex}
 
-\input{./definitions.tex}
+
+\usepackage{t1enc}
+\usepackage[utf8]{inputenc}
+\usepackage[magyar]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage[shortlabels]{enumitem}
+\usepackage[autostyle]{csquotes}
+\usepackage{graphicx}
+
+
+
+\selectlanguage{magyar}
+
+\DeclareQuoteAlias{dutch}{magyar}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definíció}
+\newtheorem*{definition*}{Definíció}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+\newcommand{\forwardhat}{\overset{\rightharpoonup}}
+\newcommand{\backwardhat}{\overset{\leftharpoonup}}
+
+\newcommand{\inc}{\textit{inc}}
+\newcommand{\dec}{\textit{dec}}
+
+\graphicspath{ {./images/} }
+
+
 
 \title{Reverzibilis Reaction System}
 \date{\today}
