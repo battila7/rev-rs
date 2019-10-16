@@ -24,6 +24,10 @@
 \newtheorem{definition}{Definíció}
 \newtheorem*{definition*}{Definíció}
 
+\theoremstyle{plain}
+\newtheorem{theorem}{Tétel}
+\newtheorem*{theorem*}{Tétel}
+
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
 
@@ -44,10 +48,31 @@
     \maketitle
 
     \begin{definition*}
-        Az $\mathcal{A} = (S, A)$ \textit{reaction system} reverzibilissé tehető, amennyiben teljesülnek a következő feltételek:
+        Legyen $\mathcal{A} = (S, A)$ egy \textit{reaction system} és $\pi$ egy $\mathcal{A}$ felett adott $\pi$ \textit{interactive process}, amelynek állapotait $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ módon jelöljük. $\pi$ reverzibilis, amennyiben minden $W_{i}$ ($1 \leq i \leq n$) állapotára teljesül, hogy $\nexists \; W \in \mathcal{P}(S) : res_{\mathcal{A}}(W) = W_{i} \; \wedge W \neq W_{i - 1}$.
+    \end{definition*}
+
+    \begin{definition*}
+        Legyen $\mathcal{A} = (S, A)$ egy \textit{reaction system}. $\mathcal{A}$ reverzibilis, ha bármely felette definiált $\pi$ \textit{interactive process} reverzibilis.
+    \end{definition*}
+
+    \begin{theorem*}
+        Az $\mathcal{A} = (S, A)$ \textit{reaction system} reverzibilis, amennyiben teljesülnek a következő feltételek:
         \begin{enumerate}[label={(\arabic*)}]
             \item
-            $\mathcal{A}$ nem tartalmaz olyan reakciókat, melyeknek jobb oldala átfedő: tetszőleges $i, j \in A$ reakció esetén $P_{i} \cap P{j} = \emptyset$, ha $i \neq j$.
+            Egyértelmű, hogy egy állapot mely reakciók alkalmazásával állt elő. Azaz, tetszőleges $a = (R_{a}, I_{a}, P_{a}), b = (R_{b}, I_{b}, P_{b}) \in A$ ($a \neq b$) reakciópár esetén a következők egyike teljesül:
+            \begin{itemize}
+                \item
+                $a$ és $b$ azonos feltételek mellett alkalmazhatók, tehát $R_{a} = R_{b}$ és $I_{a} = I_{b}$.
+
+                \item
+                $a$ és $b$ produktumai nem átfedők, azaz $P_{a} \cap P_{b} = \emptyset$.
+
+                \item
+                $a$ produktuma tartalmazza $b$ produktumát is, azonban $a$ és $b$ nem alkalmazhatók egyszerre, tehát $P_{b} \subset P_{a}$ és $R_{a} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{a} \neq \emptyset$.
+
+                \item
+                $a$ és $b$ produktumai megegyezők, azonban van olyan $c = (R_{c}, I_{c}, P_{c}) \in A$ szabály, mely $a$-val együtt mindig, $b$-vel együtt azonban sosem alkalmazható. Ekkor $R_{c} \subseteq R_{a}$ és $I_{c} = I_{a}$, továbbá $R_{c} \cap I_{b} \neq \emptyset$.
+            \end{itemize} 
 
             \item
             A kontextusból kapott szimbólumok nem állhatnak elő egy reakció produktumaként sem: ha $\pi = (\gamma, \delta)$ egy \textit{interactive process}, ahol $\gamma = C_{0}, C_{1}, \ldots, C_{n}$, $n \geq 1$, akkor bármely $C_{i}$ kontextus és $a \in A$ reakció esetén $C_{i} \cap P_{a} = \emptyset$.
@@ -55,41 +80,9 @@
             \item
             Az állapotok minden eleme részt vesz valamilyen reakcióban: ha $\pi$ egy \textit{interactive process}, ahol $\textit{sts}(\pi) = W_{0}, W_{1}, \ldots, W_{n}$, $n \geq 1$, akkor $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
         \end{enumerate}
-        Ekkor az $\mathcal{A}$-nak megfelelő reverzibilis \textit{reaction system} $\mathcal{A}_{\textit{rev}} = (S_{\textit{rev}}, A_{\textit{rev}})$, ahol
-        \begin{align*}
-            S_{\textit{rev}} &= S \cup \{ \, \rho \, \}, \\
-            A_{\textit{rev}} &= \forwardhat A \cup \backwardhat A, \\ 
-            \forwardhat A &= \{ \, (R_{a}, I_{a} \cup \{ \, \rho \, \}, P_{a}) \; : \; a \in A \, \}, \\
-            \backwardhat A &= \{ \, (P_{a} \cup \{ \, \rho \, \}, \emptyset, R_{a}) \; : \; a \in A \, \}.
-        \end{align*}
-        $\rho$ egy speciális szimbólum (tehát $\rho \notin P_{a}, a \in A_{\textit{rev}}$), mely egy visszafelé irányba tett számítási lépésre kényszeríti a rendszert.
+    \end{theorem*}
+
+    \begin{definition*}
+        A reverzibilitás szimulálása.
     \end{definition*}
-
-    \section*{Példa}
-    Tekintsünk a \textit{Tour of Reaction Systems} cikkből egy olyan \textit{Binary Countert}, ahol $n = 2$, azaz két bittel dolgozunk. Ekkor a \textit{reaction system} a következő alaphalmazból és reakciókból áll:
-
-    \begin{align*}
-        S = \; & \{ \, p_{0}, p_{1},  \inc, \dec \, \}, \\
-        A = \; & \{ \\
-            & \quad (\{ p_{0} \}, \{ \dec, \inc \}, \{ p_{0} \}), \\
-            & \quad (\{ p_{1} \}, \{ \dec, \inc \}, \{ p_{1} \}), \\
-            & \quad (\{ \inc \}, \{ \dec, p_{0} \}, \{ p_{0} \}), \\
-            & \quad (\{ \inc, p_{0} \}, \{ \dec, p_{1} \}, \{ p_{1} \}), \\
-            & \quad (\{ \inc, p_{1} \}, \{ \dec, p_{0} \}, \{ p_{1} \}), \\
-            & \quad (\{ \dec \}, \{ \inc, p_{0}, p_{1} \}, \{ p_{1} \}), \\
-            & \quad (\{ \dec \}, \{ \inc, p_{0} \}, \{ p_{0} \}), \\
-            & \quad (\{ \dec, p_{0}, p_{1} \}, \{ \inc \}, \{ p_{1} \}), \\
-        \; &\}
-    \end{align*}
-
-    Az így kapott \textit{rs} nem teljesíti a fenti definíciót, hiszen a reakciók jobb oldalai között lesz átfedés. Ezt jobban illusztrálja, ha állapotátmenet-diagramon ábrázoljuk a rendszer működését (egyelőre kihagyva a \textit{reset} átmenetet, amikor a bemenet az $\inc$ és $\dec$ szimbólumokból áll):
-
-    \begin{figure}[h]
-        \centering
-        \includegraphics[width=5in]{two-bit-counter-states.jpg}
-    \end{figure}
-
-    Ha például a $p_{0}$ állapotban vagyunk, akkor nem tudhatjuk, hogy az üres állapotból, önmagunkból vagy a $p_{1}$ állapotból érkeztünk, azaz, a megelőző lépés növelés, helyben maradás vagy csökkentés volt-e. Így a visszalépés nem egyértelmű.
-
-    Kettőnél több bit esetén a definíció harmadik szabálya sem teljesül, hiszen ahogy a cikkben szerepel, lehetnek eltűnő szimbólumok (\enquote{\textit{[When an increment is requested] bits that are less significant than the $2^{j}$ position will disappear because there are no enabled reactions to produce them.}}).
 \end{document}
