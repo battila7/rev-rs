@@ -165,15 +165,9 @@
             \begin{align*}
                 \textit{rev}(a) = (P_{a} \cup \{ \rho \} , \emptyset, R_{a}).
             \end{align*}
-            
-            \item
-            Ha $a \in A$ olyan, hogy van olyan $b \in A$ $(a \neq b)$, melyre $P_{b} \subset P_{a}$, de nincs olyan $c \in A$ $(a \neq c)$, melyre $P_{a} \subset P_{c}$, akkor
-            \begin{align*}
-                \textit{rev}(a) = (P_{a} \cup \{ \rho \}, \emptyset, R_{a}).
-            \end{align*}
 
             \item
-            Ha $a \in A$ olyan, hogy vannak olyan $b_{i} \in A$ $(a \neq b_{i})$ reakciók, melyek mindegyikére teljesül, hogy $P_{a} \subset P_{b_{i}}$, akkor
+            Ha $a \in A$ olyan, hogy vannak olyan $b_{i} \in A$ $(a \neq b_{i})$ reakciók, melyek mindegyikére teljesül, hogy $P_{a} \cap P_{b_{i}} \neq \emptyset$, akkor
             \begin{align*}
                 \textit{rev}(a) = (P_{a} \cup \{ \rho \}, \bigcup\limits_{i}P_{b_{i}} \setminus P_{a}, R_{a}).
             \end{align*}
