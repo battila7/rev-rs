@@ -69,7 +69,7 @@
     \end{definition*}
 
     \begin{remark*}
-        A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a = (R_{a}, I_{a}, P_{a}), b = (R_{b}, I_{b}, P_{b}) \in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$.
+        A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S, A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a = (R_{a}, I_{a}, P_{a}), b = (R_{b}, I_{b}, P_{b}) \in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$.
     \end{remark*}
 
     \begin{theorem*}
@@ -102,7 +102,7 @@
 
     Reverzibilis \textit{reaction system} felhasználásával megvalósítható egy olyan bináris számláló, melynek értéke az előrefelé számítás során növekszik, míg a hátrafelé számítás során csökken.
 
-    Először is tegyük fel, hogy adott egy $n > 0$ egész. $n$ fogja jelenteni a számláló bithosszát. Ekkor a \textit{reaction system} alaphalmaza a következő lesz:
+    Először is tegyük fel, hogy adott egy $n > 0$ egész. $n$ jelenti a számláló bithosszát. Ekkor a \textit{reaction system} alaphalmaza a következő lesz:
     \begin{align*}
         S_{n} = \{ p_{0}, p_{1}, \ldots, p_{n - 1}\} \cup \{ \textit{inc} \}.
     \end{align*}
@@ -110,7 +110,7 @@
 
     A számábrázolás tehát a következőképpen alakul. Tegyük fel, hogy a \textit{reaction system} egy $M \subseteq S$ állapotban van. Ekkor, ha $p_{i} \in M$, akkor az $i$-edik pozíción levő bit $1$ értékkel, amennyiben pedig $p_{i} \notin M$, akkor $0$ értékkel rendelkezik. Például, ha $n = 4$ és $M = \{p_{2}, p_{0}\}$, akkor a \textit{reaction system} állapota a $0101$ bináris számot írja le.
     
-    Előrefelé számítás során az $\textit{inc}$ elemet használhatjuk a számláló értékének eggyel történő növelésére. Egyszerű példát tekintve,ez azt jelenti, hogy amennyiben a \textit{reaction system} egy $\{p_{1}, p_{0}, \textit{inc}\}$ állapotban van, akkor valamely reakciók végrehajtása után a $\{ p_{2} \}$ állapotba kell kerülnie.
+    Előrefelé számítás során az $\textit{inc}$ elemet használhatjuk a számláló értékének eggyel történő növelésére. Egyszerű példát tekintve, ez azt jelenti, hogy amennyiben a \textit{reaction system} egy $\{p_{1}, p_{0}, \textit{inc}\}$ állapotban van, akkor valamely reakciók végrehajtása után a $\{ p_{2} \}$ állapotba kell kerülnie.
 
     Folytassuk tehát az említett működéshez szükséges reakciók megadásával! Legyen $n > 0$ adott, ekkor a reakciók $A_{n}$ halmaza a következő elemekből áll:
     \begin{align*}
@@ -137,7 +137,53 @@
     \begin{align*}
         \emptyset \rightarrow \{p_{0}\} \rightarrow \{p_{1}\} \rightarrow \{p_{1}, p_{0}\}.
     \end{align*}
-    \begin{definition*}
-        A reverzibilitás szimulálása.
-    \end{definition*}
+
+    \section*{A reverzibilitás szimulálása}
+
+    A következőkben egy olyan \textit{reaction systemet} írunk le, mely interaktív előrefelé számításokkal képes szimulálni egy, a fenti tétel szerinti reverzibilis \textit{reaction system} előre- és hátrafelé irányba tett lépéseit.
+
+    Ez egy olyan számítási szemantikát jelenít meg, ahol tetszés szerint lehetőségünk van a megelőző lépéseink visszavonására, majd új számítási utak kiválasztására.
+
+    \begin{theorem*}
+        Legyen $\mathscr{A} = (S, A)$ egy olyan \textit{reaction system}, mely a megelőző tétel szerint reverzibilis. Ekkor létezik olyan $\mathscr{R} = (T, B)$ \textit{reaction system}, mely $\mathscr{A}$ reverzibilitását szimulálja, mégpedig a következőképpen.
+        
+        A $T$ alaphalmaz az $\mathscr{A}$ \textit{reaction system} alaphalmaza, kiegészülve egy speciális $\rho$ szimbólummal, mely egy szimulált visszafelé lépés kiváltására szolgál:
+        \begin{align*}
+            T = S \cup \{ \rho \}.
+        \end{align*}
+
+        A $B$ reakcióhalmaz a következő módon adott:
+        \begin{align*}
+            B &= \forwardhat B \cup \backwardhat B, \\
+            \forwardhat B &= \{ (R_{a}, I_{a} \cup \{ \rho \}, P_{a}) : a \in A\}, \\
+            \backwardhat B &= \{ \textit{rev}(a) : a \in A \},
+        \end{align*}
+        ahol a $\textit{rev}$ függvény az alábbiak szerint állít elő egy új reakciót:
+        \begin{enumerate}[label={(\arabic*)}]
+            \item
+            Ha $a \in A$ olyan, hogy nincs olyan $b \in A$ $(a \neq b)$, hogy $P_{a} \cap P_{b} \neq \emptyset$, akkor
+            \begin{align*}
+                \textit{rev}(a) = (P_{a} \cup \{ \rho \} , \emptyset, R_{a}).
+            \end{align*}
+            
+            \item
+            Ha $a \in A$ olyan, hogy van olyan $b \in A$ $(a \neq b)$, melyre $P_{b} \subset P_{a}$, de nincs olyan $c \in A$ $(a \neq c)$, melyre $P_{a} \subset P_{c}$, akkor
+            \begin{align*}
+                \textit{rev}(a) = (P_{a} \cup \{ \rho \}, \emptyset, R_{a}).
+            \end{align*}
+
+            \item
+            Ha $a \in A$ olyan, hogy vannak olyan $b_{i} \in A$ $(a \neq b_{i})$ reakciók, melyek mindegyikére teljesül, hogy $P_{a} \subset P_{b_{i}}$, akkor
+            \begin{align*}
+                \textit{rev}(a) = (P_{a} \cup \{ \rho \}, \bigcup\limits_{i}P_{b_{i}} \setminus P_{a}, R_{a}).
+            \end{align*}
+
+            \item
+            Ha $a, b \in A$ $(a \neq b)$ olyanok, hogy $P_{a} = P_{b}$, de van olyan $c \in A$ ($a \neq c$ és $b \neq c$) reakció, melyre teljesül, hogy $R_{c} \subseteq R_{a}$ és $I_{c} \subseteq I_{a}$, továbbá $R_{c} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{c} \neq \emptyset$, akkor
+            \begin{align*}
+                \textit{rev}(a) &= (P_{a} \cup P_{c} \cup \{ \rho \}, \emptyset, R_{a}), \\
+                \textit{rev}(b) &= (P_{b} \cup \{ \rho \}, P_{c}, R_{b}).
+            \end{align*}
+        \end{enumerate}
+    \end{theorem*}
 \end{document}
