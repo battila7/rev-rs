@@ -10,6 +10,7 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{enumerate}
+\usepackage{mathtools}
 \usepackage[shortlabels]{enumitem}
 \usepackage[autostyle]{csquotes}
 \usepackage{graphicx}
@@ -42,6 +43,14 @@
 \newcommand{\inc}{\textit{inc}}
 \newcommand{\dec}{\textit{dec}}
 
+\newcommand{\en}{\; \textit{en} \;}
+\newcommand{\excl}{\; \textit{excl} \;}
+\newcommand{\incl}{\; \textit{incl} \;}
+
+\newcommand{\reaction}[3]{
+    (#1, \, #2, \, #3)
+}
+
 \graphicspath{ {./images/} }
 
 
@@ -58,6 +67,22 @@
         Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}. Egy $\mathscr{A}$-beli \textit{interactive process} véges sorozatok olyan $\pi = (\gamma, \delta)$ párja, amelyben $\gamma = C_{0}, C_{1}, \ldots C_{n}$, $\delta = D_{1}, \ldots D_{n}$, $n \geq 1$, ahol $C_{0}, \ldots C_{n}$, $D_{1}, \ldots D_{n} \subseteq S$, $D_{1} = \textit{res}_{\mathscr{A}}(C_{0})$ és $D_{i} = \textit{res}_{\mathscr{A}}(D_{i - 1} \cup C_{i - 1})$, ha $2 \leq i \leq n$.
     \end{definition*}
 
+    \begin{definition*}
+        Legyen $a = \reaction{R_{a}}{I_{a}}{P_{a}}$ egy reakció, $T$ pedig egy véges halmaz. Azt mondjuk, hogy $a$ alkalmazható $T$-re, ha $R_{a} \subseteq T$ és $I_{a} \cap T = \emptyset$. Erre a továbbiakban az $a \en T$ jelölést használjuk.
+    \end{definition*}
+    
+    \begin{remark*}
+        A következőkben, az egyszerűbb olvashatóság érdekében, feltesszük, hogy ha adott egy $a \in A$ reakció, akkor annak komponenseit $a$ alsó indexbe helyezésével helyezésével jelöljük, az $a = \reaction{R_{a}}{I_{a}}{P_{a}} \in A$ kifejezés kiírása nélkül.
+    \end{remark*}
+
+    \begin{definition*}
+        Legyen $a$ és $b$ ($a \neq b$) két reakció. Azt mondjuk, hogy $a$ és $b$ nem alkalmazhatók együtt, ha nem létezik olyan $T$ véges halmaz, melyre egyidejűleg $a \en T$ és $b \en T$ teljesülne. Ekkor $R_{a} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{a} \neq \emptyset$. Erre a kapcsolatra a továbbiakban az $a \excl b$ jelölést alkalmazzuk.
+    \end{definition*}
+
+    \begin{definition*}
+        Legyen $a$ és $b$ ($a \neq b$) két reakció. Azt mondjuk, hogy $b$ $a$-val együtt mindig alkalmazható, ha bármely $T$ véges halmazra, melyre $a \en T$ teljesül, $b \en T$ is teljesül. Ekkor $R_{b} \subseteq R_{a}$ és $I_{b} \subseteq I_{a}$. A továbbiakban ezt a kapcsolatot $a \incl b$ módon jelöljük.
+    \end{definition*}
+
     \section*{Reverzibilis Reaction System}
 
     \begin{definition*}
@@ -69,23 +94,23 @@
     \end{definition*}
 
     \begin{remark*}
-        A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S, A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a = (R_{a}, I_{a}, P_{a}), b = (R_{b}, I_{b}, P_{b}) \in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$.
+        A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S, A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a, b\in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$.
     \end{remark*}
 
     \begin{theorem*}
         Az $\mathscr{A} = (S, A)$ \textit{reaction system} reverzibilis, amennyiben teljesülnek a következő feltételek:
         \begin{enumerate}[label={(\arabic*)}]
             \item
-            Egyértelmű, hogy egy állapot mely reakciók alkalmazásával állt elő. Azaz, tetszőleges $a = (R_{a}, I_{a}, P_{a}), b = (R_{b}, I_{b}, P_{b}) \in A$ ($a \neq b$) reakciópár esetén a következők egyike teljesül:
+            Egyértelmű, hogy egy állapot mely reakciók alkalmazásával állt elő. Azaz, tetszőleges $a, b \in A$ ($a \neq b$) reakciópár esetén a következők egyike teljesül:
             \begin{itemize}
                 \item
                 $a$ és $b$ produktumai nem átfedők, azaz $P_{a} \cap P_{b} = \emptyset$.
 
                 \item
-                $a$ produktuma tartalmazza $b$ produktumát is, azonban $a$ és $b$ nem alkalmazhatók egyszerre, tehát $P_{b} \subset P_{a}$ és $R_{a} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{a} \neq \emptyset$.
+                $a$ produktuma tartalmazza $b$ produktumát is, azonban $a$ és $b$ nem alkalmazhatók egyszerre, tehát $P_{b} \subset P_{a}$ és $a \excl b$.
 
                 \item
-                $a$ és $b$ produktumai megegyezők, azonban van olyan $c = (R_{c}, I_{c}, P_{c}) \in A$ szabály, mely $a$-val együtt mindig, $b$-vel együtt azonban sosem alkalmazható. Ekkor $R_{c} \subseteq R_{a}$ és $I_{c} \subseteq I_{a}$, továbbá $R_{c} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{c} \neq \emptyset$.
+                $a$ és $b$ produktumai megegyezők, azonban van olyan $c \in A$ reakció, mely $a$-val együtt mindig, $b$-vel együtt azonban sosem alkalmazható, és melynek produktuma tartalmaz egy vagy több, $b$ produktumában nem szerepelő elemet. Ekkor $a \incl c$, $c \excl b$ és $P_{b} \cup P_{c} \neq P_{b}$.
             \end{itemize} 
 
             \item
@@ -114,26 +139,26 @@
 
     Folytassuk tehát az említett működéshez szükséges reakciók megadásával! Legyen $n > 0$ adott, ekkor a reakciók $A_{n}$ halmaza a következő elemekből áll:
     \begin{align*}
-        a_{i} = (\{ \, \textit{inc} \, \} \cup O_{i}, \; Z_{i}, \; O_{i + 1}), \qquad 0 \leq i < 2^{n} - 2,
+        a_{i} = \reaction{\{ \inc \} \cup O_{i}}{Z_{i}}{O_{i + 1}}, \qquad 0 \leq i < 2^{n} - 2,
     \end{align*}
     ahol
     \begin{align*}
         O_{i} &= \{ \; p_{j} \; : \; \text{a $j$-edik bit értéke $1$ $i$ bináris felbontásában} \; \}, \\
-        Z_{i} &= S \setminus\{ \, \textit{inc} \, \} \setminus O_{i}.
+        Z_{i} &= S \setminus\{ \inc \} \setminus O_{i}.
     \end{align*}
     Az egyes reakciók megfelelnek a számláló értékének $i$-ről $i + 1$-re történő növelésének.
 
     Az $n$-bites számlálónak megfelelő \textit{reaction system} ekkor $\mathcal{B}_{n}=(S_{n}, A_{n})$.
 
-    Tekintsünk most egy példát! Tegyük fel, hogy egy kétbites számlálót szeretnénk készíteni, azaz $n = 2$. Az $S_{2}$ alaphalmaz ekkor a $\{p_{1}, p_{0}, \textit{inc}\}$ elemekből áll, a reakciók $A_{2}$ halmazát pedig az
+    Tekintsünk most egy példát! Tegyük fel, hogy egy kétbites számlálót szeretnénk készíteni, azaz $n = 2$. Az $S_{2}$ alaphalmaz ekkor a $\{p_{1}, p_{0}, \inc\}$ elemekből áll, a reakciók $A_{2}$ halmazát pedig az
     \begin{align*}
-        a_{0} &= (\{ \textit{inc} \}, \{ p_{1}, p_{0} \}, \{ p_{0} \} ), \\
-        a_{1} &= (\{ \textit{inc}, p_{0} \}, \{ p_{1} \}, \{ p_{1} \} ), \\
-        a_{2} &= (\{ \textit{inc}, p_{1} \}, \{ p_{0} \}, \{ p_{1}, p_{0} \} ),
+        a_{0} &= \reaction{\{ \inc \}}{\{ p_{1}, p_{0} \}}{\{ p_{0} \}}, \\
+        a_{1} &= \reaction{\{ \inc, p_{0} \}}{\{ p_{1} \}}{\{ p_{1} \}}, \\
+        a_{2} &= \reaction{\{ \inc, p_{1} \}}{\{ p_{0} \}}{\{ p_{1}, p_{0} \}},
     \end{align*}
     elemek alkotják.
 
-    Ha az egymást követő kontextushalmazok sorra a \textit{inc} növelő elemből állnak, akkor a $\mathcal{B}_{2} = (S_{2}, A_{2})$ \textit{reaction system} a következő állapotokat fogja kiszámolni:
+    Ha az egymást követő kontextushalmazok sorra az \inc növelő elemből állnak, akkor a $\mathcal{B}_{2} = (S_{2}, A_{2})$ \textit{reaction system} a következő állapotokat fogja kiszámolni:
     \begin{align*}
         \emptyset \rightarrow \{p_{0}\} \rightarrow \{p_{1}\} \rightarrow \{p_{1}, p_{0}\}.
     \end{align*}
@@ -163,21 +188,26 @@
             \item
             Ha $a \in A$ olyan, hogy nincs olyan $b \in A$ $(a \neq b)$, hogy $P_{a} \cap P_{b} \neq \emptyset$, akkor
             \begin{align*}
-                \textit{rev}(a) = (P_{a} \cup \{ \rho \} , \emptyset, R_{a}).
+                \textit{rev}(a) = \reaction{P_{a} \cup \{ \rho \}}{\emptyset}{R_{a}}.
             \end{align*}
 
             \item
-            Ha $a \in A$ olyan, hogy vannak olyan $b_{i} \in A$ $(a \neq b_{i})$ reakciók, melyek mindegyikére teljesül, hogy $P_{a} \cap P_{b_{i}} \neq \emptyset$, akkor
+            Ha $a \in A$ olyan, hogy vannak olyan $b_{i} \in A$ $(a \neq b_{i})$ reakciók, melyek mindegyikére teljesül, hogy $P_{a} \cap P_{b_{i}} \neq \emptyset$ és $P_{a} \neq P_{b_{i}}$, akkor
             \begin{align*}
-                \textit{rev}(a) = (P_{a} \cup \{ \rho \}, \bigcup\limits_{i}P_{b_{i}} \setminus P_{a}, R_{a}).
+                \textit{rev}(a) = \reaction{P_{a} \cup \{ \rho \}}{\bigcup\limits_{i}P_{b_{i}} \setminus P_{a}}{R_{a}}.
             \end{align*}
 
             \item
-            Ha $a, b \in A$ $(a \neq b)$ olyanok, hogy $P_{a} = P_{b}$, de van olyan $c \in A$ ($a \neq c$ és $b \neq c$) reakció, melyre teljesül, hogy $R_{c} \subseteq R_{a}$ és $I_{c} \subseteq I_{a}$, továbbá $R_{c} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{c} \neq \emptyset$, akkor
+            Ha az $a_{i} \in A$ $(0 \leq i < n$, ahol $n > 0$ egész$)$ reakciók olyanok, hogy $P_{a_{0}} = P_{a_{1}} = \cdots = P_{n - 1}$, és legfeljebb egy kivételével mindegyik $a_{i}$ reakcióhoz létezik olyan $b_{i}$ reakció, melyre teljesül, hogy
             \begin{align*}
-                \textit{rev}(a) &= (P_{a} \cup P_{c} \cup \{ \rho \}, \emptyset, R_{a}), \\
-                \textit{rev}(b) &= (P_{b} \cup \{ \rho \}, P_{c}, R_{b}).
+                a_{i} &\incl b_{i}, \\
+                b_{i} \excl a_{j} \quad & \quad 0 \leq j < n, i \neq j,
+            \end{align*}
+            akkor
+            \begin{align*}
+                rev(a_{i}) = \reaction{P_{a_{i}} \cup P_{b_{i}} \cup \{ \rho \}}{\bigcup\limits_{\substack{ \mathllap{0 \, \leq} \, j \, \mathrlap{< \, n} \\ \mathllap{i} \, \neq \, \mathrlap{j} }}P_{b_{j}}}{R_{a_{i}}}.
             \end{align*}
         \end{enumerate}
     \end{theorem*}
 \end{document}
+
