@@ -43,7 +43,8 @@
 \newcommand{\inc}{\textit{inc}}
 \newcommand{\dec}{\textit{dec}}
 
-\newcommand{\en}{\; \textit{en} \;}
+\newcommand{\en}{\textit{en}}
+\newcommand{\res}{\textit{res}}
 \newcommand{\excl}{\; \textit{excl} \;}
 \newcommand{\incl}{\; \textit{incl} \;}
 
@@ -68,20 +69,20 @@
     \end{definition*}
 
     \begin{definition*}
-        Legyen $a = \reaction{R_{a}}{I_{a}}{P_{a}}$ egy reakció, $T$ pedig egy véges halmaz. Azt mondjuk, hogy $a$ alkalmazható $T$-re, ha $R_{a} \subseteq T$ és $I_{a} \cap T = \emptyset$. Erre a továbbiakban az $a \en T$ jelölést használjuk.
+        Legyen $a = \reaction{R_{a}}{I_{a}}{P_{a}}$ egy reakció, $T$ pedig egy véges halmaz. Azt mondjuk, hogy $a$ alkalmazható $T$-re, ha $R_{a} \subseteq T$ és $I_{a} \cap T = \emptyset$. Erre a továbbiakban az $\en_{a}(T)$ jelölést használjuk. Az $a$ reakció által a $T$ halmazból képzett eredményhalmazt $\res_{a}(T)$ módon jelöljük, és a következőképpen definiáljuk: $\res_{a}(T) = P_{a}$, ha $\en_{a}(T)$, egyébként pedig $\res_{a}(T) = \emptyset$.
+    \end{definition*}
+
+    \begin{definition*}
+        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. Ekkor az $A$ reakcióhalmaz $T$-re való alkalmazásának eredménye $\res_{A}(T) = \bigcup_{a \,\in\, A}\res_{a}(T)$.
+    \end{definition*}
+
+    \begin{definition*}
+        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. $A$ azon részhalmazát, mely csak olyan reakciókat tartalmaz, melyek alkalmazhatók $T$-re, $\en_{A}(T)$ módon jelöljük.
     \end{definition*}
     
     \begin{remark*}
         A következőkben, az egyszerűbb olvashatóság érdekében, feltesszük, hogy ha adott egy $a \in A$ reakció, akkor annak komponenseit $a$ alsó indexbe helyezésével helyezésével jelöljük, az $a = \reaction{R_{a}}{I_{a}}{P_{a}} \in A$ kifejezés kiírása nélkül.
     \end{remark*}
-
-    \begin{definition*}
-        Legyen $a$ és $b$ ($a \neq b$) két reakció. Azt mondjuk, hogy $a$ és $b$ nem alkalmazhatók együtt, ha nem létezik olyan $T$ véges halmaz, melyre egyidejűleg $a \en T$ és $b \en T$ teljesülne. Ekkor $R_{a} \cap I_{b} \neq \emptyset$ vagy $R_{b} \cap I_{a} \neq \emptyset$. Erre a kapcsolatra a továbbiakban az $a \excl b$ jelölést alkalmazzuk.
-    \end{definition*}
-
-    \begin{definition*}
-        Legyen $a$ és $b$ ($a \neq b$) két reakció. Azt mondjuk, hogy $b$ $a$-val együtt mindig alkalmazható, ha bármely $T$ véges halmazra, melyre $a \en T$ teljesül, $b \en T$ is teljesül. Ekkor $R_{b} \subseteq R_{a}$ és $I_{b} \subseteq I_{a}$. A továbbiakban ezt a kapcsolatot $a \incl b$ módon jelöljük.
-    \end{definition*}
 
     \section*{Reverzibilis Reaction System}
 
@@ -101,21 +102,14 @@
         Az $\mathscr{A} = (S, A)$ \textit{reaction system} reverzibilis, amennyiben teljesülnek a következő feltételek:
         \begin{enumerate}[label={(\arabic*)}]
             \item
-            Egyértelmű, hogy egy állapot mely reakciók alkalmazásával állt elő. Azaz, tetszőleges $a, b \in A$ ($a \neq b$) reakciópár esetén a következők egyike teljesül:
-            \begin{itemize}
-                \item
-                $a$ és $b$ produktumai nem átfedők, azaz $P_{a} \cap P_{b} = \emptyset$.
-
-                \item
-                $a$ és $b$ produktumai átfedők, azonban megkülönböztethetők, azaz $P_{a} \cap P_{b} \neq \emptyset$ és $P_{a} \not\subset P_{b}$ és $P_{b} \not\subset P_{A}$.
-
-                \item
-                $a$ és $b$ produktumai között tartalmazás áll fent, azonban $a$ és $b$ nem alkalmazhatók egyszerre, tehát $P_{a} \subset P_{b} \vee P_{b} \subset P_{a}$  és $a \excl b$.
-
-                \item
-                $a$ és $b$ produktumai megegyezők, azonban van olyan $c \in A$ reakció, mely $a$-val együtt mindig, $b$-vel együtt azonban sosem alkalmazható, és melynek produktuma tartalmaz egy vagy több, $b$ produktumában nem szerepelő elemet. Ekkor $a \incl c$, $c \excl b$ és $P_{b} \cup P_{c} \neq P_{b}$.
-            \end{itemize} 
-
+            Egyértelmű, hogy egy állapot mely reakciók alkalmazásával állt elő: Ha vesszük a reakciók $A$ halmazának összes olyan különböző $A_i$ részhalmazát, hogy
+            \begin{align*}
+                \exists \, T \in S : \en_{a}(T) \qquad \forall a \in A_{i},
+            \end{align*}
+            akkor
+            \begin{align*}
+                \bigcup\limits_{a \,\in\, A_{i}} P_{a} \neq \bigcup\limits_{b \,\in\, A_{j}} P_{b} \qquad i \neq j.
+            \end{align*}
             \item
             A kontextusból kapott szimbólumok nem állhatnak elő egy reakció produktumaként sem: ha $\pi = (\gamma, \delta)$ egy \textit{interactive process}, ahol $\gamma = C_{0}, C_{1}, \ldots, C_{n}$, $n \geq 1$, akkor bármely $C_{i}$ kontextus és $a \in A$ reakció esetén $C_{i} \cap P_{a} = \emptyset$.
 
@@ -123,6 +117,49 @@
             Az állapotok minden eleme részt vesz valamilyen reakcióban: ha $\pi$ egy \textit{interactive process}, ahol $\textit{sts}(\pi) = W_{0}, W_{1}, \ldots, W_{n}$, $n \geq 1$, akkor $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
         \end{enumerate}
     \end{theorem*}
+
+    \begin{proof}
+        Indirekt módon tegyük fel, hogy adott egy olyan $\mathscr{A}=(S, a)$ \textit{reaction system}, mely teljesíti a fenti tételt, azonban nem reverzibilis. Ekkor létezik olyan $\pi$ \textit{interactive process} $\mathscr{A}$-ban, mely nem reverzibilis. Ez azt jelenti, hogy a folyamat tartalmaz olyan $W \subseteq S$ állapotot, melyhez léteznek olyan $W_{i} \subseteq S$ és $W_{j} \subseteq S$ halmazok, hogy
+        \begin{align*}
+            \res_{A}(W_{i}) &= W \\
+            \res_{A}(W_{j}) &= W,
+        \end{align*}
+        miközben
+        \begin{align*}
+            W_{i} \neq W_{j}.
+        \end{align*}
+
+        Mivel $\res_{A}(W_{i}) = \res_{A}(W_{j})$, ezért
+        \begin{align*}
+            \bigcup\limits_{a \,\in\, \en_{A}(W_{i})}P_{a} = \bigcup\limits_{b \,\in\, \en_{A}(W_{b})}P_{b}.
+        \end{align*}
+
+        $\mathscr{A}$ teljesíti a fenti tételt, ezért ismert, hogy ilyen esetben
+        \begin{align*}
+            \en_{A}(W_{i}) = \en_{A}(W_{j}).
+        \end{align*}
+
+        Ismert továbbá, hogy egy számítási lépésben egy adott állapothalmaz minden elemének részt kell vennie legalább egy reakcióban. Ebből következik, hogy
+        \begin{align*}
+            \bigcup\limits_{a \,\in\, \en_{A}(W_{i})} R_{a} = W_{i}
+        \end{align*}
+        és
+        \begin{align*}
+            \bigcup\limits_{b \,\in\, \en_{A}(W_{j})} R_{b} = W_{j}.
+        \end{align*}
+
+        A bizonyítás elején feltettük, hogy $W_{i} \neq W_{j}$, amiből következően
+        \begin{align*}
+            \bigcup\limits_{a \,\in\, \en_{A}(W_{i})} R_{a} \neq \bigcup\limits_{b \,\in\, \en_{A}(W_{j})} R_{b}.
+        \end{align*}
+
+        Tudjuk, hogy $\en_{A}(W_{i}) = \en_{A}(W_{j})$, mely halmazt jelöljük $E$-vel. Ezt a megelőző kifejezésbe beírva kapjuk, hogy
+        \begin{align*}
+            \bigcup\limits_{a \,\in\, E} R_{a} \neq \bigcup\limits_{b \,\in\, E} R_{b}.
+        \end{align*}
+        
+        Ez azonban ellentmondás, azaz $\mathscr{A}$ reverzibilis lesz.
+    \end{proof}
 
     \subsection*{Példák}
 
@@ -168,53 +205,4 @@
     \begin{align*}
         \{z\} \rightarrow \{p_{0}\} \rightarrow \{p_{1}\} \rightarrow \{p_{1}, p_{0}\} \rightarrow \{z\} \rightarrow \cdots
     \end{align*}
-
-    \section*{A reverzibilitás szimulálása}
-
-    A következőkben egy olyan \textit{reaction systemet} írunk le, mely interaktív előrefelé számításokkal képes szimulálni egy, a fenti tétel szerinti reverzibilis \textit{reaction system} előre- és hátrafelé irányba tett lépéseit.
-
-    Ez egy olyan számítási szemantikát jelenít meg, ahol tetszés szerint lehetőségünk van a megelőző lépéseink visszavonására, majd új számítási utak kiválasztására.
-
-    \begin{theorem*}
-        Legyen $\mathscr{A} = (S, A)$ egy olyan \textit{reaction system}, mely a megelőző tétel szerint reverzibilis. Ekkor létezik olyan $\mathscr{R} = (T, B)$ \textit{reaction system}, mely $\mathscr{A}$ reverzibilitását szimulálja, mégpedig a következőképpen.
-        
-        A $T$ alaphalmaz az $\mathscr{A}$ \textit{reaction system} alaphalmaza, kiegészülve egy speciális $\rho$ szimbólummal, mely egy szimulált visszafelé lépés kiváltására szolgál:
-        \begin{align*}
-            T = S \cup \{ \rho \}.
-        \end{align*}
-
-        A $B$ reakcióhalmaz a következő módon adott:
-        \begin{align*}
-            B &= \forwardhat B \cup \backwardhat B, \\
-            \forwardhat B &= \{ (R_{a}, I_{a} \cup \{ \rho \}, P_{a}) : a \in A\}, \\
-            \backwardhat B &= \{ \textit{rev}(a) : a \in A \},
-        \end{align*}
-        ahol a $\textit{rev}$ függvény az alábbiak szerint állít elő egy új reakciót:
-        \begin{itemize}
-            \item
-            Ha $a \in A$ olyan, hogy bármely $b \in A$ $(a \neq b)$ reakció esetén $P_{a} \cap P_{b} = \emptyset$, akkor
-            \begin{align*}
-                \textit{rev}(a) = \reaction{P_{a} \cup \{ \rho \}}{\emptyset}{R_{a}}.
-            \end{align*}
-
-            \item
-            Egyébként, vegyük az $a \in A$ reakcióhoz a következő halmazokat:
-            \begin{align*}
-                I &= \{ \, i \in A \; : \; a \incl i \, \}, \\
-                C &= \{ \, (r, c) \in A \times A \; : \; P_{r} = P_{a} \wedge r \incl c \wedge a \excl c \, \}, \\
-                W &= \{ \, w \in A \; : \; P_{a} \subset P_{w} \, \}.
-            \end{align*}
-            Ezekből képezzük az új reakciót alkotó komponenseket:
-            \begin{align*}
-                R_{\textit{rev}} &= P_{a} \cup \{ \rho \} \cup \bigcup\limits_{i \,\in\, I} P_{i}, \\
-                I_{\textit{rev}} &= \bigcup\limits_{(r, c) \,\in\, C}P_{c} \cup \bigcup\limits_{w \,\in\, W} P_{w} \setminus P_{a}, \\
-                P_{\textit{rev}} &= R_{a},
-            \end{align*}
-            melyeket felhasználva
-            \begin{align*}
-                \textit{rev}(a) = \reaction{R_{\textit{rev}}}{I_{\textit{rev}}}{P_{\textit{rev}}}.
-            \end{align*}
-        \end{itemize}
-    \end{theorem*}
 \end{document}
-
