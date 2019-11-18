@@ -34,6 +34,10 @@
 \newtheorem{theorem}{Tétel}
 \newtheorem*{theorem*}{Tétel}
 
+\theoremstyle{plain}
+\newtheorem{lemma}{Lemma}
+\newtheorem*{lemma*}{Lemma}
+
 \let\oldemptyset\emptyset
 \let\emptyset\varnothing
 
@@ -42,6 +46,9 @@
 
 \newcommand{\inc}{\textit{inc}}
 \newcommand{\dec}{\textit{dec}}
+
+\newcommand{\rs}{\textit{reaction system}}
+\newcommand{\ip}{\textit{interactive process}}
 
 \newcommand{\en}{\textit{en}}
 \newcommand{\res}{\textit{res}}
@@ -86,60 +93,131 @@
 
     \section*{Reverzibilis Reaction System}
 
+    \begin{remark*}
+        A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S, A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a, b\in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$. Az ilyen $a, b$ reakciókat ugyanis egyszerűen összevonhatjuk egy $c$ reakcióvá, ahol $c = (R_{a}, I_{a}, P_{a} \cup P_{b})$.
+    \end{remark*}
+
     \begin{definition*}
-        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system} és $\pi$ egy olyan \textit{interactive process} $\mathscr{A}$-ban, amelynek állapotait $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ módon jelöljük. $\pi$ reverzibilis, amennyiben minden $W_{i}$ ($1 \leq i \leq n$) állapotára teljesül, hogy $\nexists \; W \in \mathcal{P}(S) : res_{\mathscr{A}}(W) = W_{i} \; \wedge W \neq W_{i - 1}$.
+        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\pi=(\gamma, \delta)$ pedig egy \textit{interactive process} $\mathscr{A}$-ban a $\gamma = C_{0}, C_{1}, \ldots C_{n}$, bemeneti halmazokkal és $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. $\pi$ reverzibilis, amennyiben minden $W_{i}$ ($1 \leq i \leq n$) állapotára teljesül, hogy ha $W \subseteq S$ olyan, hogy $res_{\mathscr{A}}(W) \cup C_{i} = W_{i}$, akkor $W = W_{i - 1}$.
     \end{definition*}
+
+    \begin{lemma*}
+        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\pi$ pedig egy \textit{interactive process} $\mathscr{A}$-ban az $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. $\pi$ csak akkor lehet reverzibilis, ha az állapothalmazainak minden eleme részt vesz valamilyen reakcióban, azaz $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
+    \end{lemma*}
+
+    \begin{proof}
+        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system} és $\pi=(\gamma, \delta)$ egy \textit{interactive process} $\mathscr{A}$-ban a $\gamma = C_{0}, C_{1}, \ldots C_{n}$, bemeneti halmazokkal és az $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. Legyen $W_{i - 1} \subseteq S$ és $W_{i} \subseteq S$ $\pi$ két egymást követő állapothalmaza, azaz $\res_{A}(W_{i-1}) \cup C_{i}=W_{i}$.
+        
+        Tegyük fel, hogy van olyan elem a $W_{i-1}$ halmazban, mely nem vesz részt egy reakcióban sem:
+        \begin{align*}
+            \bigcup_{a \,\in\, \textit{en}(W_{i-i})} R_{a} \subset W_{i-1}.
+        \end{align*}
+        Ez pontosan azt jelenti, hogy létezik egy olyan $W \subset S$ halmaz, mely
+        \begin{align*}
+            W = \bigcup_{a \,\in\, \textit{en}(W_{i-i})} R_{a}
+        \end{align*}
+        módon adott, és melyre teljesül, hogy
+        \begin{align*}
+            \res_{A}(W) \cup C_{i} = W_{i}.
+        \end{align*}
+
+        Ekkor $\pi$ biztosan nem lehet reverzibilis, hiszen $W \neq W_{i - 1}$, viszont $\res_{A}(W) = \res_{A}(W_{i - 1})$.
+    \end{proof}
 
     \begin{definition*}
         Egy $\mathscr{A}$ \textit{reaction system} reverzibilis, amennyiben minden $\mathscr{A}$-beli $\pi$ \textit{interactive process} reverzibilis.
     \end{definition*}
 
-    \begin{remark*}
-        A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S, A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a, b\in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$.
-    \end{remark*}
+    \begin{lemma*}
+        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}. $\mathscr{A}$ csak akkor lehet reverzibilis, ha minden $\pi = (\gamma, \delta)$ $\mathscr{A}$-beli \textit{interactive process} olyan, hogy $\pi$ $\gamma = C_{0}, C_{1}, \ldots, C_{n}$ bemeneti halmazainak elemei nem állíthatók elő semmilyen reakcióval, azaz $\forall i$ $:$ $\bigcup_{a \in A} P_{a} \cap C_{i} = \emptyset$.
+    \end{lemma*}
+
+    \begin{proof}
+        A következőkben megmutatjuk, hogy ha egy $\mathscr{A}$ \textit{reaction system} nem teljesíti a fenti lemmát (azaz reakciói tetszőlegesek), akkor biztosan nem lehet reverzibilis.
+
+        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\pi = (\gamma, \delta)$ pedig egy \textit{interactive process} $\mathscr{A}$-ban, ahol $\gamma = C_{0}, C_{1}, \ldots, C_{n}$, $\delta = D_{1}, D_{2},\ldots,D_{n}$ és $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$.
+
+        Vegyük $sts(\pi)$ egy tetszőleges $W_{i - 1}$ állapothalmazát ($i \leq n$), valamint válasszuk meg a $C_{i}$ bemeneti halmazt oly módon, hogy
+        \begin{align*}
+            C_{i} = \res_{A}(W_{i - 1}).
+        \end{align*}
+        Ezt megtehetjük, hiszen nincs a bemeneti halmazok elemeire vonatkozó megszorítás.
+
+        Tudjuk, hogy
+        \begin{align*}
+            W_{i} = C_{i} \cup D_{i} = C_{i} \cup \res_{A}(W_{i - 1}),
+        \end{align*}
+        azaz
+        \begin{align*}
+            W_{i} = C_{i}.
+        \end{align*}
+
+        Ez azonban azt jelenti, hogy tetszőleges $W \subseteq S$ halmazra, ha
+        \begin{align*}
+            \res_{A}(W) \subseteq C_{i},
+        \end{align*}
+        akkor
+        \begin{align*}
+            \res_{A}(W) \cup C_{i} = W_{i}.
+        \end{align*}
+
+        Ilyen tulajdonságú halmazból mindig létezik legalább kettő: $W_{i-1}$ és az üres halmaz. Ha viszont már két ilyen halmaz létezik, akkor $\pi$ nem reverzibilis, amiből következik, hogy $\mathscr{A}$ sem reverzibilis.
+    \end{proof}
 
     \begin{theorem*}
-        Az $\mathscr{A} = (S, A)$ \textit{reaction system} reverzibilis, amennyiben teljesülnek a következő feltételek:
+        Az $\mathscr{A} = (S, A)$ \textit{reaction system} reverzibilis, amennyiben a következő feltételek mindegyikének eleget tesz:
         \begin{enumerate}[label={(\arabic*)}]
+            \item
+            Az $A$ reakcióhalmaz elemei olyanok, hogy bármely $\pi$ \textit{interactive process} teljesíti az elemek eltűnésére vonatkozó lemmát.
+
+            \item
+            Az $S$ halmaz két diszjunkt részhalmazból tevődik össze:
+            \begin{align*}
+                S = S_{c} \cup S_{d} \qquad S_{c} \cap S_{d} = \emptyset,
+            \end{align*}
+            mely halmazokra teljesül, hogy $S_{c} \cap \bigcup_{a \in A} P_{a} = \emptyset$ és $S_{d} \cap \bigcup_{0 \leq i \leq n} C_{i} = \emptyset$ bármely $\mathscr{A}$-beli $\pi$ \textit{interactive processre} (azaz $\mathscr{A}$ teljesíti a bemeneti halmazokra vonatkozó lemmát).
+
             \item
             Egyértelmű, hogy egy állapot mely reakciók alkalmazásával állt elő: Ha vesszük a reakciók $A$ halmazának összes olyan különböző $A_i$ részhalmazát, hogy
             \begin{align*}
-                \exists \, T \subseteq S : \en_{A_{i}}(T) = A_{i}
+                \exists \, T \subseteq S : \en_{A_{i}}(T) = A_{i} \qquad \forall i
             \end{align*}
             akkor
             \begin{align*}
                 \bigcup\limits_{a \,\in\, A_{i}} P_{a} \neq \bigcup\limits_{b \,\in\, A_{j}} P_{b} \qquad i \neq j.
             \end{align*}
-            \item
-            A kontextusból kapott szimbólumok nem állhatnak elő egy reakció produktumaként sem: ha $\pi = (\gamma, \delta)$ egy \textit{interactive process}, ahol $\gamma = C_{0}, C_{1}, \ldots, C_{n}$, $n \geq 1$, akkor bármely $C_{i}$ kontextus és $a \in A$ reakció esetén $C_{i} \cap P_{a} = \emptyset$.
-
-            \item
-            Az állapotok minden eleme részt vesz valamilyen reakcióban: ha $\pi$ egy \textit{interactive process}, ahol $\textit{sts}(\pi) = W_{0}, W_{1}, \ldots, W_{n}$, $n \geq 1$, akkor $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
         \end{enumerate}
     \end{theorem*}
 
     \begin{proof}
-        Indirekt módon tegyük fel, hogy adott egy olyan $\mathscr{A}=(S, a)$ \textit{reaction system}, mely teljesíti a fenti tételt, azonban nem reverzibilis. Ekkor létezik olyan $\pi$ \textit{interactive process} $\mathscr{A}$-ban, mely nem reverzibilis. Ez azt jelenti, hogy a folyamat tartalmaz olyan $W \subseteq S$ állapotot, melyhez léteznek olyan $W_{i} \subseteq S$ és $W_{j} \subseteq S$ halmazok, hogy
+        Indirekt módon tegyük fel, hogy adott egy olyan $\mathscr{A}=(S, A)$ ($S = S_{c} \cup S_{d}$) \textit{reaction system}, mely teljesíti a fenti tételt, azonban nem reverzibilis. Ekkor létezik olyan $\pi$ \textit{interactive process} $\mathscr{A}$-ban, mely nem reverzibilis. Ez azt jelenti, hogy a folyamat tartalmaz olyan $W \subseteq S$ állapotot, melyhez léteznek olyan $W_{i} \subseteq S$ és $W_{j} \subseteq S$ ($W_{i} \neq W_{j}$) halmazok, hogy
         \begin{align*}
-            \res_{A}(W_{i}) &= W \\
-            \res_{A}(W_{j}) &= W,
+            \res_{A}(W_{i}) \cup C &= W \\
+            \res_{A}(W_{j}) \cup C &= W,
         \end{align*}
-        miközben
+        ahol $C \subseteq S_{c}$ a $W$ állapothoz tartozó bemeneti halmaz. 
+        
+        Mivel mind $\res_{A}(W_{i}) \subseteq S_{d}$, mind $\res_{A}(W_{j}) \subseteq S_{d}$, ezért
         \begin{align*}
-            W_{i} \neq W_{j}.
+            \res_{A}(W_{i}) &= W \setminus C \\
+            \res_{A}(W_{j}) &= W \setminus C, \\
+        \end{align*}
+        azaz
+        \begin{align*}
+            \res_{A}(W_{i}) = \res_{A}(W_{j}).
         \end{align*}
 
-        Mivel $\res_{A}(W_{i}) = \res_{A}(W_{j})$, ezért
+        Ez azt jelenti, hogy
         \begin{align*}
             \bigcup\limits_{a \,\in\, \en_{A}(W_{i})}P_{a} = \bigcup\limits_{b \,\in\, \en_{A}(W_{b})}P_{b}.
         \end{align*}
 
-        $\mathscr{A}$ teljesíti a fenti tételt, ezért ismert, hogy ilyen esetben
+        $\mathscr{A}$ teljesíti a fenti tételt,  ezért ilyen esetben
         \begin{align*}
             \en_{A}(W_{i}) = \en_{A}(W_{j}).
         \end{align*}
 
-        Ismert továbbá, hogy egy számítási lépésben egy adott állapothalmaz minden elemének részt kell vennie legalább egy reakcióban. Ebből következik, hogy
+        Egy számítási lépésben egy adott állapothalmaz minden elemének részt kell vennie legalább egy reakcióban, azaz
         \begin{align*}
             \bigcup\limits_{a \,\in\, \en_{A}(W_{i})} R_{a} = W_{i}
         \end{align*}
