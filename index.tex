@@ -267,52 +267,6 @@
         Ez azonban ellentmondás, azaz $\mathscr{A}$ reverzibilis lesz.
     \end{proof}
 
-    \subsection*{Példák}
-
-    \subsubsection*{Reverzibilis bináris számláló}
-
-    Reverzibilis \textit{reaction system} felhasználásával megvalósítható egy olyan ciklikus bináris számláló, melynek értéke az előrefelé számítás során növekszik, míg a hátrafelé számítás során csökken. A ciklikusság azt jelenti, hogy a legnagyobb ábrázolható érték további növelése a $0$ értéket, míg a $0$ érték további csökkentése a legnagyobb ábrázolható értéket eredményezi.
-
-    Először is tegyük fel, hogy adott egy $n > 0$ egész. $n$ jelenti a számláló bithosszát. Ekkor a \textit{reaction system} alaphalmaza a következő lesz:
-    \begin{align*}
-        S_{n} = \{ p_{0}, p_{1}, \ldots, p_{n - 1}\} \cup \{ \textit{inc}, z \}.
-    \end{align*}
-    A fenti halmaz $p_{i}$ elemei reprezentálják az egyes bitek beállított (azaz $1$ értékű) állapotát, míg az $\textit{inc}$ elemmel a számláló értékének növelését válthatjuk ki. A $z$ elem jelenti a számláló $0$ értékét.
-
-    A számábrázolás tehát a következőképpen alakul. Tegyük fel, hogy a \textit{reaction system} egy $M \subseteq S$ állapotban van. Ekkor, ha $p_{i} \in M$, akkor az $i$-edik pozíción levő bit $1$ értékkel, amennyiben pedig $p_{i} \notin M$, akkor $0$ értékkel rendelkezik. Például, ha $n = 4$ és $M = \{p_{2}, p_{0}\}$, akkor a \textit{reaction system} állapota a $0101$ bináris számot írja le.
-    
-    Előrefelé számítás során az $\textit{inc}$ elemet használhatjuk a számláló értékének eggyel történő növelésére. Egyszerű példát tekintve, ez azt jelenti, hogy amennyiben a \textit{reaction system} egy $\{p_{1}, p_{0}, \textit{inc}\}$ állapotban van, akkor valamely reakciók végrehajtása után a $\{ p_{2} \}$ állapotba kell kerülnie.
-
-    Folytassuk tehát az említett működéshez szükséges reakciók megadásával! Legyen $n > 0$ adott, ekkor a reakciók $A_{n}$ halmaza a következő elemekből áll:
-    \begin{align*}
-        a_{0} &= \reaction{\{ \inc, z \}}{O_{2^{n}-1}}{O_{1}} \\
-        a_{i} &= \reaction{\{ \inc \} \cup O_{i}}{Z_{i}}{O_{i + 1}}, \qquad 1 \leq i < 2^{n} - 2, \\
-        a_{2^{n}-1} &= \reaction{\{ \inc \} \cup O_{2^{n} - 1}}{\{z\}}{\{z\}}
-    \end{align*}
-    ahol
-    \begin{align*}
-        O_{i} &= \{ \; p_{j} \; : \; \text{a $j$-edik bit értéke $1$ $i$ bináris felbontásában} \; \}, \\
-        Z_{i} &= S \setminus\{ \inc \} \setminus O_{i}.
-    \end{align*}
-    Az egyes reakciók megfelelnek a számláló értékének $i$-ről $i + 1$-re történő növelésének (kivétel az utolsó reakció, mely a számláló átfordulását eredményezi).
-
-    Az $n$-bites számlálónak megfelelő \textit{reaction system} ekkor $\mathcal{B}_{n}=(S_{n}, A_{n})$.
-
-    Tekintsünk most egy példát! Tegyük fel, hogy egy kétbites számlálót szeretnénk készíteni, azaz $n = 2$. Az $S_{2}$ alaphalmaz ekkor a $\{p_{1}, p_{0}, \inc, z \}$ elemekből áll, a reakciók $A_{2}$ halmazát pedig az
-    \begin{align*}
-        a_{0} &= \reaction{\{ \inc, z \}}{\{p_{0}, p_{1}\}}{\{ p_{0} \}}, \\
-        a_{1} &= \reaction{\{ \inc, p_{0} \}}{\{ z, p_{1} \}}{\{ p_{1} \}}, \\
-        a_{2} &= \reaction{\{ \inc, p_{1} \}}{\{ z, p_{0} \}}{\{ p_{1}, p_{0} \}}, \\
-        a_{3} &= \reaction{\{ \inc, p_{0}, p_{1} \}}{\{z\}}{\{z\}}
-    \end{align*}
-    elemek alkotják.
-
-    Ha az egymást követő kontextushalmazok sorra az \inc növelő elemből állnak, akkor a $\mathcal{B}_{2} = (S_{2}, A_{2})$ \textit{reaction system} a következő állapotokat fogja kiszámolni:
-    \begin{align*}
-        \{z\} \rightarrow \{p_{0}\} \rightarrow \{p_{1}\} \rightarrow \{p_{1}, p_{0}\} \rightarrow \{z\} \rightarrow \cdots
-    \end{align*}
-
-
     \section*{A reverzibilitás szimulálása}
 
     \begin{definition*}
