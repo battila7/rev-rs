@@ -34,6 +34,10 @@
 \newtheorem{theorem}{Tétel}
 \newtheorem*{theorem*}{Tétel}
 
+\theoremstyle{remark}
+\newtheorem{corollary}{Következmény}
+\newtheorem*{corollary*}{Következmény}
+
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}
 \newtheorem*{lemma*}{Lemma}
@@ -69,58 +73,71 @@
 
     \section*{Előzetes ismeretek}
 
-    \begin{definition*}
+    A következőkben bevezetjük azokat a \textit{reaction systemekkel} kapcsolatos jelöléseket, melyekre a továbbiakban támaszkodni fogunk. Ezek között megtalálható néhány új jelölés is, mely eddigi cikkekben nem szerepelt, azonban jelentősen leegyszerűsíti a későbbi definíciókat.
+
+    \begin{definition}
         Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}. Egy $\mathscr{A}$-beli \textit{interactive process} véges sorozatok olyan $\pi = (\gamma, \delta)$ párja, amelyben $\gamma = C_{0}, C_{1}, \ldots C_{n}$, $\delta = D_{1}, \ldots D_{n}$, $n \geq 1$, ahol $C_{0}, \ldots C_{n}$, $D_{1}, \ldots D_{n} \subseteq S$, $D_{1} = \textit{res}_{\mathscr{A}}(C_{0})$ és $D_{i} = \textit{res}_{\mathscr{A}}(D_{i - 1} \cup C_{i - 1})$, ha $2 \leq i \leq n$.
-    \end{definition*}
+    \end{definition}
 
-    \begin{definition*}
+    \begin{definition}
         Legyen $a = \reaction{R_{a}}{I_{a}}{P_{a}}$ egy reakció, $T$ pedig egy véges halmaz. Azt mondjuk, hogy $a$ alkalmazható $T$-re, ha $R_{a} \subseteq T$ és $I_{a} \cap T = \emptyset$. Erre a továbbiakban az $\en_{a}(T)$ jelölést használjuk. Az $a$ reakció által a $T$ halmazból képzett eredményhalmazt $\res_{a}(T)$ módon jelöljük, és a következőképpen definiáljuk: $\res_{a}(T) = P_{a}$, ha $\en_{a}(T)$, egyébként pedig $\res_{a}(T) = \emptyset$.
-    \end{definition*}
+    \end{definition}
 
-    \begin{definition*}
-        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. Ekkor az $A$ reakcióhalmaz $T$-re való alkalmazásának eredménye $\res_{A}(T) = \bigcup_{a \,\in\, A}\res_{a}(T)$.
-    \end{definition*}
-
-    \begin{definition*}
-        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. Jelölje ekkor $\textit{RES}_{A}(T)$ azt a halmazt, mely az összes, $T$-ből $A$-beli reakciók alkalmazásával előállítható eredményhalmazt tartalmazza, azaz $\textit{RES}_{A}(T) = \{ \, \res_{A}(W) \; \mid \; W \subseteq T\, \}$
-    \end{definition*}
-
-    \begin{definition*}
-        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. $A$ azon részhalmazát, mely csak olyan reakciókat tartalmaz, melyek alkalmazhatók $T$-re, $\en_{A}(T)$ módon jelöljük.
-    \end{definition*}
-
-    \begin{definition*}
-        Legyen $S$ egy véges halmaz, $A$ pedig reakciók egy véges halmaza. Jelölje ekkor $\textit{EN}_{A}(S)$ azon különböző reakcióhalmazokat, melyek alkalmazhatók $S$ valamely részhalmazára, azaz
-        \begin{align*}
-            \textit{EN}_{A}(S) = \{ B \;|\; B \subseteq A \wedge \exists\,T \subseteq S : \en_{B}(T) = B \}
-        \end{align*}
-    \end{definition*}
-    
     \begin{remark*}
         A következőkben, az egyszerűbb olvashatóság érdekében, feltesszük, hogy ha adott egy $a \in A$ reakció, akkor annak komponenseit $a$ alsó indexbe helyezésével helyezésével jelöljük, az $a = \reaction{R_{a}}{I_{a}}{P_{a}} \in A$ kifejezés kiírása nélkül.
     \end{remark*}
 
-    \begin{remark*}
-        A következőkben feltesszük, hogy egy $\mathscr{A} = (S, A)$ \textit{reaction system} $S$ elemhalmazát (\textit{background set}) megadhatjuk két (nem feltétlenül diszjunkt) halmaz uniójaként: $S = \Sigma_{p} \cup \Sigma_{c}$. Jelölje ekkor $\Sigma_{p}$ azon elemek halmazát, melyek előállhatnak valamely $A$-beli reakció alkalmazásával, azaz $\Sigma_{p} = \bigcup_{a \, \in \, A}P_{a}$. Jelölje továbbá $\Sigma_{c}$ azon elemek halmazát, melyek szerepelhetnek valamilyen $A$-beli \textit{interactive process} valamely bemeneti halmazában. Utóbbi azt jelenti, hogy korlátozható azon elemek halmaza, melyek bemenetként megjelenhetnek.
-    \end{remark*}
+    \begin{definition}
+        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. Ekkor az $A$ reakcióhalmaz $T$-re való alkalmazásának eredménye $\res_{A}(T) = \bigcup_{a \,\in\, A}\res_{a}(T)$.
+    \end{definition}
 
-    \section*{Reverzibilis Reaction System}
+    \begin{definition}
+        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. Jelölje ekkor $\textit{RES}_{A}(T)$ azt a halmazt, mely az összes, $T$-ből $A$-beli reakciók alkalmazásával előállítható eredményhalmazt tartalmazza, azaz $\textit{RES}_{A}(T) = \{ \, \res_{A}(W) \; \mid \; W \subseteq T\, \}$
+    \end{definition}
+
+    \begin{definition}
+        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. $A$ azon részhalmazát, mely csak olyan reakciókat tartalmaz, melyek alkalmazhatók $T$-re, $\en_{A}(T)$ módon jelöljük.
+    \end{definition}
+
+    \begin{definition}
+        Legyen $A$ reakciók egy véges halmaza és $T$ egy véges halmaz. Jelölje ekkor $\textit{EN}_{A}(T)$ azon különböző reakcióhalmazokat, melyek alkalmazhatók $T$ valamely részhalmazára, azaz
+        \begin{align*}
+            \textit{EN}_{A}(T) = \{ B \;|\; B \subseteq A \wedge \exists\,S \subseteq T : \en_{B}(S) = B \}.
+        \end{align*}
+        Az $\textit{EN}_{A}(T)$ halmazra gondolhatunk úgy, hogy reakciócsoportokat tartalmaz. Minden ilyen reakciócsoport olyan reakciókat foglal magában, melyek $T$-nek valamely részére együttesen alkalmazhatók.
+    \end{definition}
 
     \begin{remark*}
         A továbbiakban, az általánosság elvesztése nélkül, kizárólag olyan $\mathscr{A} = (S, A)$ \textit{reaction systemeket} fogunk tekinteni, melyek nem tartalmaznak azonos feltételek mellett alkalmazható reakciókat. Ez azt jelenti, hogy nincs két olyan $a, b\in A$ ($a \neq b$) reakció, melyekre teljesülne, hogy $R_{a} = R_{b}$ és $I_{a} = I_{b}$. Az ilyen $a, b$ reakciókat ugyanis egyszerűen összevonhatjuk egy $c$ reakcióvá, ahol $c = (R_{a}, I_{a}, P_{a} \cup P_{b})$.
+    \end{remark*}    
+
+    \section*{Reverzibilis Reaction System}
+
+    A vizsgálódásaink előtt be kell vezetnünk a reverzibilitás fogalmát a \textit{reaction systemekre} vonatkozóan. Ehhez  először az egyes \textit{interactive processekre} adjuk meg a reverzibilitás jelentését. A következő definíció azt az intuíciót formalizálja, miszerint akkor tudunk visszalépni a megelőző állapotba, ha az aktuális állapotunk csak egyetlen állapotból képződhetett. Azaz, nincs lehetőségünk kettő vagy több különböző állapotból elérni pontosan ugyanabba az állapotba.
+
+    \begin{definition}\label{def:reversible-interactive-process}
+        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\pi=(\gamma, \delta)$ pedig egy \textit{interactive process} $\mathscr{A}$-ban a $\gamma = C_{0}, C_{1}, \ldots C_{n}$, bemeneti halmazokkal és $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. $\pi$ reverzibilis, amennyiben minden $W_{i}$ ($1 \leq i \leq n$) állapotára teljesül, hogy ha $W \subseteq S$ olyan, hogy $res_{\mathscr{A}}(W) \cup C_{i} = W_{i}$, akkor $W = W_{i - 1}$.
+    \end{definition}
+
+    A fenti definícióban kulcsfontosságú a bemeneti halmazok ($C_{i}$) szerepe. Nem elég ugyanis, hogy az aktuális eredményhalmaz (mely halmazokat $D_{i}$ módon szoktuk jelölni, azonban a definícióban $\res_{\mathscr{A}}(W)$ módon jelenik meg) egyértelműen előállítható. Önmagában ez az egyértelműség ugyanis a bemeneti halmazzal még elrontható: az eredményhalmazt egy olyan bemenettel párosítjuk, mely egy másik lehetséges eredményhalmaznak felel meg. Ennek folytán az eredményhalmaznak és a hozzá társuló bemenetnek ($\res_{\mathscr{A}}(W) \cup C_{i}$) kell együttesen egyedinek lenni.
+
+    \begin{definition}\label{def:reversible-reaction-system}
+        Egy $\mathscr{A}$ \textit{reaction system} reverzibilis, amennyiben minden $\mathscr{A}$-beli $\pi$ \textit{interactive process} reverzibilis.
+    \end{definition}
+
+    Már a \ref{def:reversible-interactive-process}. definícióban megfogalmazott reverzibilis \textit{interactive process} fogalom is függött a bemenettől. Mivel a \ref{def:reversible-reaction-system}. definíciót az \textit{interactive processek} reverzibilitására építve adtuk meg, ezért sejthető, hogy szoros összefüggés van a bemenet milyensége és a reverzibilitás között. Ebből kifolyólag további jelöléseket vezetünk be a \textit{reaction systemek} háttérhalmazára (\textit{background set}) vonatkozóan, kihangsúlyozva a lehetséges bemeneteket.
+
+    \begin{remark*}
+        A következőkben feltesszük, hogy egy $\mathscr{A} = (S, A)$ \textit{reaction system} $S$ háttérhalmazát (\textit{background set}) megadhatjuk két (nem feltétlenül diszjunkt) halmaz uniójaként: $S = \Sigma_{p} \cup \Sigma_{c}$. Jelölje ekkor $\Sigma_{p}$ azon elemek halmazát, melyek előállhatnak valamely $A$-beli reakció alkalmazásával, azaz $\Sigma_{p} = \bigcup_{a \, \in \, A}P_{a}$. Jelölje továbbá $\Sigma_{c}$ azon elemek halmazát, melyek szerepelhetnek valamilyen $A$-beli \textit{interactive process} valamely bemeneti halmazában. Utóbbi azt jelenti, hogy korlátozható azon elemek halmaza, melyek bemenetként megjelenhetnek.
     \end{remark*}
 
-    \begin{definition*}
-        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\pi=(\gamma, \delta)$ pedig egy \textit{interactive process} $\mathscr{A}$-ban a $\gamma = C_{0}, C_{1}, \ldots C_{n}$, bemeneti halmazokkal és $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. $\pi$ reverzibilis, amennyiben minden $W_{i}$ ($1 \leq i \leq n$) állapotára teljesül, hogy ha $W \subseteq S$ olyan, hogy $res_{\mathscr{A}}(W) \cup C_{i} = W_{i}$, akkor $W = W_{i - 1}$.
-    \end{definition*}
+    Továbblépve, megkíséreljük körülírni, hogy mely tulajdonságok teljesülése esetén lehet egy \textit{reaction system} reverzibilis.
 
-    \begin{definition*}
-        Egy $\mathscr{A}$ \textit{reaction system} reverzibilis, amennyiben minden $\mathscr{A}$-beli $\pi$ \textit{interactive process} reverzibilis.
-    \end{definition*}
+    Érdemes a legegyszerűbbel kezdeni: tegyük fel, hogy van egy olyan állapotunk, melyre csak olyan reakciók alkalmazhatók, melyek nem használják fel az állapot összes elemét. Azaz, úgy tűnnek el elemek, hogy nem vesznek részt semmilyen új elem létrehozásában. Jogosnak tűnik egy olyan felvetés, hogy ha vannak ilyen, lényegében nyom nélkül eltűnő elemek, akkor nem beszélhetünk reverzibilitásról.
 
-    \begin{lemma*}
+    \begin{lemma}\label{lem:no-disappearing-elements}
         Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\pi$ pedig egy \textit{interactive process} $\mathscr{A}$-ban az $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. $\pi$ csak akkor lehet reverzibilis, ha az állapothalmazainak minden eleme részt vesz valamilyen reakcióban, azaz $\bigcup_{a \in \textit{en}(W_{i})} R_{a} = W_{i}$, $i \leq n$.
-    \end{lemma*}
+    \end{lemma}
 
     \begin{proof}
         Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system} és $\pi=(\gamma, \delta)$ egy \textit{interactive process} $\mathscr{A}$-ban a $\gamma = C_{0}, C_{1}, \ldots C_{n}$, bemeneti halmazokkal és az $\textit{sts}(\pi)=W_{0},W_{1},\ldots W_{n}$ állapothalmazokkal. Legyen $W_{i - 1} \subseteq S$ és $W_{i} \subseteq S$ $\pi$ két egymást követő állapothalmaza, azaz $\res_{A}(W_{i-1}) \cup C_{i}=W_{i}$.
@@ -141,33 +158,36 @@
         Ekkor $\pi$ biztosan nem lehet reverzibilis, hiszen $W \neq W_{i - 1}$, viszont $W_{i} = \res_{A}(W) \cup C_{i} = \res_{A}(W_{i - 1}) \cup C_{i}$.
     \end{proof}
 
-    \begin{lemma*}
-        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}, $\mathcal{D} \subseteq \mathcal{P}(S)$ pedig a következő módon adott:
+    Az \textit{interactive processek} reverzibilitásáról szóló \ref{def:reversible-interactive-process}. definíció szerint a bemenetek befolyásolják egy \textit{reaction system} reverzibilitását. Egészen pontosan, nem elég, ha az egyes eredményhalmazok egyediek (azaz, egyértelműen előállíthatók), szükséges az is, hogy bemenettel ne lehessen ezt az egyediséget semmissé tenni. Bizonyosnak látszik tehát, hogy egy \textit{reaction system} reverzibilitásához szükség van erre a tulajdonságra is, azaz, hogy egy eredményhalmaz bemenettel párosítva is egyedi legyen. Itt fog szerephez jutni a háttérhalmaz szétválasztása két, nem feltétlenül diszjunkt halmazra.
+
+    \begin{lemma}\label{lem:unique-results}
+        Legyen $\mathscr{A} = (S, A)$ ($S = \Sigma_{p} \cup \Sigma_{c}$, ahol ezek nem feltétlenül diszjunkt halmazok) egy \textit{reaction system}, $\mathcal{D} \subseteq \mathcal{P}(S)$ pedig a következő módon adott:
         \begin{align*}
             \mathcal{D} = \{ \, R \setminus \Sigma_{c} \mid R \in \textit{RES}_{A}(S) \, \}.
         \end{align*}
-        $\mathscr{A}$ csak akkor lehet reverzibilis, ha
+        Azaz, vesszük az összes, $S$-ből $A$-beli reakciókkal előállítható halmazt, majd ezekből kivesszük a lehetséges bemeneti szimbólumokat ($\Sigma_{c}$ elemeit).
+        $\mathscr{A}$ csak akkor lehet reverzibilis, ha nincs két olyan eredményhalmaz, mely között csak bemeneti elemek tettek különbséget:
         \begin{align*}
             |\,\mathcal{D}\,| = |\,\textit{RES}_{A}(S)\,|.
         \end{align*}
-    \end{lemma*}
+    \end{lemma}
 
     \begin{proof}
-        Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}. Tegyük fel, hogy 
+        Legyen $\mathscr{A} = (S, A)$ ($S = \Sigma_{p} \cup \Sigma_{c}$) egy \textit{reaction system}. Tegyük fel, hogy 
         \begin{align*}
             |\,\mathcal{D}\,| \neq |\,\textit{RES}_{A}(S)\,|.
         \end{align*}
-        Ekkor biztos, hogy
+        Ekkor $\mathcal{D}$ felírásából adódóan biztos, hogy
         \begin{align*}
             |\,\mathcal{D}\,| < |\,\textit{RES}_{A}(S)\,|.
         \end{align*}
-        Ez azt jelenti, hogy létezik $R_{i}, R_{j} \in \textit{RES}_{A}(S)$ ($R_{i} \neq R_{j}$), hogy
+        Ez azt jelenti, hogy létezik $D_{i}, D_{j} \in \textit{RES}_{A}(S)$ ($D_{i} \neq D_{j}$), hogy
         \begin{align*}
-            R_{i} \setminus \Sigma_{c} = R_{j} \setminus \Sigma_{c}.
+            D_{i} \setminus \Sigma_{c} = D_{j} \setminus \Sigma_{c}.
         \end{align*}
-        Mivel $R_{i}$ és $R_{j}$ elemei a $\textit{RES}_{A}(S)$ halmaznak, ezért léteznek olyan $W_{i}, W_{j} \subseteq S$ ($W_{i} \neq W_{j}$) halmazok, hogy $\res_{A}(W_{i}) = R_{i}$ és $\res_{A}(W_{j}) = R_{j}$. Továbbá, mivel $R_{i} \neq R_{j}$, azonban $R_{i} \setminus \Sigma_{c} = R_{j} \setminus \Sigma_{c}$, ezért $C$-t olyannak választva, hogy $C = (R_{i} \cap \Sigma_{c}) \cup (R_{j} \cap \Sigma_{c})$, teljesül, hogy
+        Mivel $D_{i}$ és $D_{j}$ elemei a $\textit{RES}_{A}(S)$ halmaznak, ezért léteznek olyan $W_{i}, W_{j} \subseteq S$ ($W_{i} \neq W_{j}$, hiszen különböző eredményhalmazok csak különböző állapothalmazókból állíthatók elő, azonos reakciók esetén) halmazok, hogy $\res_{A}(W_{i}) = D_{i}$ és $\res_{A}(W_{j}) = D_{j}$. Továbbá, mivel $D_{i} \neq D_{j}$, azonban $D_{i} \setminus \Sigma_{c} = D_{j} \setminus \Sigma_{c}$, ezért $C$-t olyannak választva, hogy $C = (D_{i} \cap \Sigma_{c}) \cup (D_{j} \cap \Sigma_{c})$, teljesül, hogy
         \begin{align*}
-            R_{i} \cup C = R_{j} \cup C.
+            D_{i} \cup C = D_{j} \cup C.
         \end{align*}
         Ezen állítások azt jelentik, hogy létezik $W_{i}, W_{j} \subseteq S$ ($W_{i} \neq W_{j}$) és $C \subseteq \Sigma_{c}$ úgy, hogy
         \begin{align*}
@@ -176,12 +196,14 @@
         azaz $\mathscr{A}$ nem reverzibilis.
     \end{proof}     
 
-    \begin{lemma*}
+    Az elemek nyom nélküli eltűnését tiltó \ref{lem:no-disappearing-elements}. lemmában már érintőlegesen foglalkoztunk a reakciókkal. Most vegyük elő őket újra, ezúttal részletesebben. Tudjuk, hogy egy \textit{reaction system} biztosan nem lehet reverzibilis, ha egy eredményhalmaz több különböző állapothalmazból is előállítható. Mivel az eredményhalmazok reakciók útján jönnek létre, ebből formalizálhatunk egy, a reakciókra vonatkozó követelményt.
+
+    \begin{lemma}\label{lem:unique-products}
         Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}. $\mathscr{A}$ csak akkor lehet reverzibilis, ha egyértelmű, hogy egy eredményhalmaz mely reakciók alkalmazásával állt elő. Azaz bármely $E_{i}, E_{j} \in \textit{EN}_{A}(S)$ ($E_{i} \neq E_{j}$) esetén
         \begin{align*}
             \bigcup\limits_{a \,\in\, E_{i}} P_{a} \neq \bigcup\limits_{b \,\in\, E_{j}} P_{b}.
         \end{align*}
-    \end{lemma*}
+    \end{lemma}
 
     \begin{proof}
         Legyen $\mathscr{A} = (S, A)$ egy \textit{reaction system}. Tegyük fel, hogy létezik $E_{i}, E_{j} \in \textit{EN}_{A}(S)$ ($E_{i} \neq E_{j}$) úgy, hogy
@@ -199,23 +221,25 @@
         azaz $\mathscr{A}$ nem reverzibilis.
     \end{proof}
 
-    \begin{theorem*}
+    Az előbbi három lemma felhasználásával már felírhatunk egy olyan \textit{reaction systemet}, mely valóban megfelel a reverzibilitás definíciójának. A felírásban a második lemmát tekintve egy szigorúbb követelményt fogalmazunk meg: feltesszük, hogy a bemeneti elemek nem állíthatók elő semmilyen reakcióval (azaz $\Sigma_{p}$ és $\Sigma_{c}$ diszjunkt halmazok). Bár ez a feltétel nem következik egyértelműen a második lemmából, azonban jelentősen leegyszerűsíti a reverzibilitás bizonyítását.
+
+    \begin{theorem}\label{the:reversible-reaction-system}
         Az $\mathscr{A} = (S, A)$ \textit{reaction system} reverzibilis, amennyiben a következő feltételek mindegyikének eleget tesz:
         \begin{enumerate}[label={(\arabic*)}]
             \item
-            Az $A$ reakcióhalmaz elemei olyanok, hogy bármely $\pi$ \textit{interactive process} teljesíti az elemek eltűnésére vonatkozó lemmát.
+            Az $A$ reakcióhalmaz elemei olyanok, hogy bármely \textit{interactive process} teljesíti az \ref{lem:no-disappearing-elements}. lemmát.
 
             \item
             Az $S$ halmaz két diszjunkt részhalmazból tevődik össze:
             \begin{align*}
                 S = \Sigma_{p} \cup \Sigma_{c} \qquad \Sigma_{p} \cap \Sigma_{c} = \emptyset,
             \end{align*}
-            mely halmazokra teljesül, hogy $\Sigma_{c} \cap \bigcup_{a \in A} P_{a} = \emptyset$ és $\Sigma_{p} \cap \bigcup_{0 \leq i \leq n} C_{i} = \emptyset$ bármely $\mathscr{A}$-beli $\pi$ \textit{interactive processre}.
+            mely halmazokra teljesül, hogy $\Sigma_{c} \cap \bigcup_{a \in A} P_{a} = \emptyset$ és $\Sigma_{p} \cap \bigcup_{0 \leq i \leq n} C_{i} = \emptyset$ bármely $\mathscr{A}$-beli $\pi$ \textit{interactive processre}. Ezáltal $\mathscr{A}$ teljesíti a \ref{lem:unique-results}. lemmát.
 
             \item
-            Az $A$ reakcióhalmaz elemei olyanok, hogy a megfelelő lemma szerint egyértelmű, hogy egy eredményhalmaz mely reakciók alkalmazásával állt elő.
+            Az $A$ reakcióhalmaz elemei olyanok, hogy bármely \textit{interactive process} teljesíti a \ref{lem:unique-products}. lemmát.
         \end{enumerate}
-    \end{theorem*}
+    \end{theorem}
 
     \begin{proof}
         Indirekt módon tegyük fel, hogy adott egy olyan $\mathscr{A}=(S, A)$ ($S = \Sigma_{p} \cup \Sigma_{c}$) \textit{reaction system}, mely megfelel az előbbi feltételeknek, azonban nem reverzibilis. Ekkor létezik olyan $\pi$ \textit{interactive process} $\mathscr{A}$-ban, mely nem reverzibilis. Ez azt jelenti, hogy a folyamat tartalmaz olyan $W \subseteq S$ állapotot, melyhez léteznek olyan $W_{i} \subseteq S$ és $W_{j} \subseteq S$ ($W_{i} \neq W_{j}$) halmazok, hogy
@@ -269,28 +293,32 @@
 
     \section*{A reverzibilitás szimulálása}
 
-    \begin{definition*}
+    A következőkben szeretnénk olyan \textit{reaction systemet} felírni, mely képes egy másik \textit{reaction systemet} szimulálni, azaz pontosan olyan lépéseket tud mind előrefelé, mind hátrafelé tenni, melyek az eredeti, szimulált rendszerben is szabályosak lennének.
+    
+    Hasonlóan a reverzibilitáshoz, a szimuláció is kapcsolatban van a \textit{interactive processekkel}, melyek véges halmazsorozatokból állnak. Elősegítendő a későbbiek olvashatóságát, most bevezetünk néhány új jelölést véges halmazsorozatokra vonatkozóan.
+
+    \begin{definition}
         Tegyük fel, hogy adott egy $n + 1$ halmazból álló véges $W=W_{0}, W_{1}, \ldots, W_{n}$ halmazsorozat. Ekkor a halmazsorozat $n + 1$ hosszát jelölje $|W|$.
-    \end{definition*}
+    \end{definition}
 
-    \begin{definition*}
-        Tegyük fel, hogy adottak a $V_{0}, V_{1}, \ldots, V_{n}$ ($n \geq 0$) véges halmazsorozatok. Ekkor az e halmazsorozatok összefűzésével kapott halmazsorozatot $W = V_{0}, V_{1}, \ldots, V_{n}$ módon jelöljük, ahol $|W| = \sum_{i = 0}^{n}|V_{i}|$.
-    \end{definition*}
+    \begin{definition}
+        Tegyük fel, hogy adottak a $V_{0}, V_{1}, \ldots, V_{n}$ ($n \geq 0$) véges halmazsorozatok. Ekkor az e halmazsorozatok összefűzésével kapott halmazsorozatot $W = V_{0}, V_{1}, \ldots, V_{n}$ módon jelöljük.
+    \end{definition}
 
-    \begin{definition*}
+    \begin{definition}
         Tegyük fel, hogy adott egy $n + 1$ halmazból álló véges $W=W_{0}, W_{1}, \ldots, W_{n}$ halmazsorozat. Ekkor a $W$ halmazsorozat fordítottját $\backwardhat W$ módon jelöljük, ahol $\backwardhat W = W_{n}, W_{n - 1}, \ldots, W_{0}$.
-    \end{definition*}
+    \end{definition}
 
-    \begin{definition*}
+    \begin{definition}
         Tegyük fel, hogy adott két véges halmazsorozat, $M$ és $W$, ahol $|M| \leq |W|$. Azt mondjuk, hogy $W$ tartalmazza $M$-et, ha $M$ összefüggő részsorozata $W$-nek, azaz létezik olyan $0 \leq i < |W|$, hogy $W_{j} = M_{j}$ ($i \leq j < i + |M|$). Ezt $M \subseteq W$ módon jelöljük.
-    \end{definition*}
+    \end{definition}
 
-    \begin{definition*}
+    \begin{definition}
         Tegyük fel, hogy adott egy $n + 1$ halmazból álló véges $W=W_{0}, W_{1}, \ldots, W_{n}$ halmazsorozat, valamint egy $D$ véges halmaz. Jelölje ekkor $W \,\setminus\, D$ azt a véges halmazsorozatot, melyet úgy állítunk elő, hogy $W$ minden elemének vesszük a különbségét $D$-vel, azaz $W \,\setminus\, D = W_{0} \,\setminus\, D, W_{1} \,\setminus\, D, \ldots, W_{n} \,\setminus\, D$.
-    \end{definition*}
+    \end{definition}
 
-    \begin{definition*}
-        Legyen $\mathscr{A}=(S, A)$ egy olyan reverzibilis \textit{reaction system}, melyet az előző tétel alapján konstruáltunk. Azt mondjuk, hogy a $\mathscr{B}$ \textit{reaction system} interaktívan szimulálja $\mathscr{A}$ lépéseit, amennyiben a következő feltételek teljesülnek:
+    \begin{definition}\label{def:interactive-simulation}
+        Legyen $\mathscr{A}$ és $\mathscr{B}$ két \textit{reaction system}. Azt mondjuk, hogy $\mathscr{B}$ interaktívan szimulálja $\mathscr{A}$ lépéseit, amennyiben a következő feltételek teljesülnek:
         \begin{itemize}
             \item
             Legyen $\pi$ egy tetszőleges \textit{interactive process} $\mathscr{A}$-ban. Ekkor létezik olyan $\sigma$ \textit{interactive process} $\mathscr{B}$-ben, hogy $\textit{sts}(\pi) \subseteq \textit{sts}(\sigma)$.
@@ -307,18 +335,30 @@
                 \item
                 Ha $i = 2m + 1$ ($m \geq 0$), akkor minden $V_{i}$-beli $W_{j}$ halmazra teljesül, hogy $\rho \in W_{j}$, továbbá létezik olyan $\pi$ \textit{interactive process} $\mathscr{A}$-ban, hogy $\backwardhat V_{i} \,\setminus\, \{ \, \rho \, \} \subseteq \textit{sts}(\pi)$.
             \end{itemize}
-            $\rho$ itt egy olyan segédszimbólum $\mathscr{B}$ elemhalmazában (\textit{background set}), mely egy szimulált hátrafelé lépést vált ki.
+            $\rho$ itt egy olyan segédszimbólum $\mathscr{B}$ háttérhalmazában (\textit{background set}), mely egy szimulált hátrafelé lépést vált ki.
+
+            \item
+            Legyen $\sigma = (\gamma, \delta)$ egy tetszőleges \textit{interactive process} $\mathscr{B}$-ben a $\gamma = C_{0}, C_{1}, \ldots, C_{n}$ bemeneti halmazokkal és a $\delta = D_{0}, D_{1}, \ldots, D_{n}$ eredményhalmazokkal. Ekkor tetszőleges $i = 0, 1, \ldots n$ esetén
+            \begin{itemize}
+                \item
+                ha $D_{i} = \emptyset$ vagy $D_{i} \subseteq \Sigma_{c}$, akkor $\rho \notin C_{i}$,
+                \item
+                ha $\rho \in C_{i}$, akkor $C_{i} = \{ \,\rho\, \}$.
+            \end{itemize}
         \end{itemize}
-        
-    \end{definition*}
+    \end{definition}
 
-    \begin{remark*}
-        Az előző definícióban a páratlan indexű $V_{i}$ halmazsorozatok jelölték a szimulált, visszafelé irányba tett lépéseket. Mivel $\mathscr{A}$-t a megelőző tétel szerint konstruáltuk, ezért minden állapothalmaz csak egyféleképpen állítható elő, valamint a reakciók nem állíthatják elő a bemeneti ábécé elemeit. Ennél fogva, $V_{i}$ akárhány elemből is áll, azok csak olyan, egymást követő állapothalmazok lehetnek, melyek korábban megjelentek szimulált előre irányba tett lépésként. Emellett, a $\rho$ szimbólum mellett hiába tartalmaznak az egyes bemeneti halmazok más, a bemeneti ábécében szereplő elemeket, azok nem befolyásolják a visszafelé szimulációt. Emiatt nem szükséges további feltételeket tennünk e halmazsorozatokra vonatkozóan.
-    \end{remark*}
+    Vegyük észre, hogy a fenti definíció nem tartalmaz semmilyen megszorítást a szimulált rendszerre vonatkozóan. Ugyanakkor, ha feltesszük, hogy $\mathscr{A}$ egy olyan \textit{reaction system}, mely teljesíti az \ref{the:reversible-reaction-system}. tételt, akkor a definícióból további következtetéseket vonhatunk le.
 
-    \begin{remark*}
-        Szimulált reverzibilitás esetén fennálhat az a probléma, hogy a szimuláló rendszer az eredeti rendszer kezdőállapotát megelőző állapotokba lép. Ezt érdemes elkerülni, hiszen így érvénytelen állapotokba léphet a szimuláló rendszer. A fenti definíció azonban ezt nem teszi lehetővé, hiszen a szimulált visszafelé irányba tett lépések csak az eredeti rendszerben is szereplő lépéssorozatok fordítottjai lehetnek, mely kizárja a helytelen, a kezdőállapot elé tett lépéseket.
-    \end{remark*}
+    \begin{corollary*}
+        Szimuláció esetén fennálhat az a probléma, hogy a szimuláló rendszer az eredeti rendszer kezdőállapotát megelőző állapotokba lép. Ezt érdemes elkerülni, hiszen így érvénytelen állapotokba léphet a szimuláló rendszer. Ha a szimulált rendszer teljesíti az \ref{the:reversible-reaction-system}. tételt, akkor ez nem lehetséges, hiszen a definíció tiltja a visszalépést kiváltó szimbólum megjelenését a kezdpállapotban, valamint az olyan állapotokban, amikor a kezdőállapotba léptünk vissza ($D_{i} \subseteq \Sigma_{c}$).
+    \end{corollary*}
+
+    \begin{corollary*}
+        A definícióban a páratlan indexű $V_{i}$ halmazsorozatok jelölték a szimulált, visszafelé irányba tett lépéseket. Ha a szimulált rendszer teljesíti az \ref{the:reversible-reaction-system}. tételt, akkor minden állapothalmaz csak egyféleképpen állítható elő, valamint a reakciók nem állíthatják elő a bemeneti ábécé elemeit. Ennél fogva, egy páratlan indexű $V_{i}$ halmazsorozat akárhány elemből is áll, azok csak olyan, egymást követő állapothalmazok lehetnek, melyek korábban megjelentek szimulált előre irányba tett lépésként. Emellett, a $\rho$ szimbólum mellett hiába tartalmaznak az egyes bemeneti halmazok más, a bemeneti ábécében szereplő elemeket, azok nem befolyásolják a visszafelé szimulációt.
+    \end{corollary*}
+
+    A továbbiakban az \ref{the:reversible-reaction-system}. tételnek eleget tevő rendszerek szimulálását fogjuk tekinteni. Ezt megelőzően azonban bevezetünk néhány új jelölést, ismét az olvashatóság elősegítése érdekében.
 
     \begin{definition*}
         Legyen $A$ reakciók egy véges halmaza. Vezessük be ekkor a következő halmazokat:
